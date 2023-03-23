@@ -1,0 +1,16 @@
+
+
+database:
+  -
+    name: filedb
+    username: root
+    password: 123456
+    host: 192.168.0.151
+    port: 3306
+    database: filedb
+  # -
+  #   username: upmdb
+  #   password: Upmdb@2022
+  #   host: g1-upmdb0000.dev.cloud-db.migu
+  #   port: 4101
+  #   database: upmdb

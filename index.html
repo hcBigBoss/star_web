@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+
+
+    <script src="js/vue.min.js"></script>
+    <script src="js/axios-0.18.0.js"></script>
+
+    <script src="js/index/imgRequest.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.13/theme-chalk/index.min.css">
+    <!-- 引入组件库 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.13/index.js"></script>
+
+
+
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+
+
+    <div id="app">
+        <el-container id="container">
+            <el-header style="height: 70px;">
+
+                <div class="header-icon">
+                    <i class="el-icon-s-promotion"></i>
+                    <h2>Star文件浏览器</h2>
+                </div>
+
+            </el-header>
+            <el-main>
+
+                <el-backtop target=".container-card"></el-backtop>
+
+                <el-card class="container-card">
+
+                    <el-tabs v-model="activeName" @tab-click="handleClick">
+
+                        <el-tab-pane label="图片" name="picture">
+                            <!-- <el-button type="primary" @click="openLoadding">fanhui</el-button> -->
+                            <!-- <el-page-header @back="goBack" content="" style="padding:5px;"> -->
+                            <!-- </el-page-header> -->
+
+                            <el-row :gutter="24">
+                                <el-col :span="6" v-for="img in imgs" class="box-col">
+
+
+
+                                    <!-- <div class="container-img" v-if="img.is_dir" >
+                                        <el-result class="container-result" icon="info" :title="img.title"
+                                            :subTitle="img.title">
+                                    </div>
+                                    <div class="container-img" v-else>
+                                        <el-image :src="img.url" class="box-img" :preview-src-list="imgUrls"
+                                            fit="fill"></el-image>
+                                    </div> -->
+
+                                    <div class="container-img">
+
+                                        <!-- :class="{'full-title':full}" -->
+
+                                        <el-image  :src="img.url"  fit="cover" class="box-img" :preview-src-list="imgUrls"
+                                            fit="fill">
+                                        </el-image>
+
+                                        <div id="title" @click="showMenu"  @mouseleave="leaveMenu">
+                                            <span>{{img.title}}</span>
+                                        </div>
+
+                                        
+                                        <!-- <el-tooltip  effect="dark" content="img.title"
+                                            placement="bottom-start">
+                                            <div id="title">{{img.title}}</div>
+                                        </el-tooltip> -->
+                                    </div>
+
+                                    <!-- <span class="demonstration">默认</span> -->
+                                </el-col>
+                            </el-row>
+
+                            <div class="block-pagination">
+                                <el-pagination layout="prev, pager, next"
+                                 @current-change="handleCurrentChange"
+                                 @size-change="handleSizeChange"
+                                    :total="total">
+                                </el-pagination>
+                            </div>
+
+                        </el-tab-pane>
+                        <el-tab-pane label="视频" name="video">
+
+
+                        </el-tab-pane>
+
+                    </el-tabs>
+
+                </el-card>
+
+            </el-main>
+        </el-container>
+    </div>
+
+
+    <script>
+
+
+
+        let app = new Vue({
+
+            el: "#app",
+            data: {
+                'activeName': 'picture',
+                'total': 100,
+                'imgs': [
+                    {
+                        'title': 'test',
+                        'url': './imgs/test.jpg'
+                    },
+                    {
+                        'title': 'test',
+                        'url': './imgs/1.jpg'
+                    },
+                    {
+                        'title': 'test',
+                        'url': './imgs/2.jpg'
+                    },
+                    {
+                        'title': 'test',
+                        'url': './imgs/3.jpg'
+                    }
+                ],
+                'imgUrls': [
+                    './imgs/1.jpg',
+                    './imgs/2.jpg',
+                    './imgs/3.jpg'
+
+                ]
+            },
+            methods: {
+                handleClick(tab, event) {
+                    console.log(tab, event);
+                },
+                showMenu(event) {
+                    
+                    console.log('showmenu')
+                    // :class="{'full-title':full}"
+
+                    let title =  event.target.parentNode
+
+                    console.log(title)
+
+                    title.classList.add('full-title');
+                },
+                leaveMenu(event){
+
+                    console.log('leaveMenu')
+
+                    let title =  event.target
+                    console.log(title)
+                    title.classList.remove('full-title');
+                },
+                openLoadding() {
+                    const loading = this.$loading({
+                        lock: true,
+                        text: 'Loading',
+                        spinner: 'el-icon-loading',
+                        background: 'rgba(0, 0, 0, 0.7)'
+                    });
+                    return loading
+                    // setTimeout(() => {
+                    //     loading.close();
+                    // }, 2000);
+                },
+                handleSizeChange(val) {
+                    console.log(`每页 ${val} 条`);
+                },
+                handleCurrentChange(val) {
+                    console.log(`当前页: ${val}`);
+                }
+            },
+            computed: {
+
+            },
+            mounted() {
+
+                // baseURL = 'http://192.168.0.55:9000/';
+                let loading = this.openLoadding()
+                for (let i = 0; i < 10; i++) {
+                    this.imgs.push({
+                        'title': 'https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.13/theme-chalk/index.min.css',
+                        'url': './imgs/test.jpg'
+                    })
+                }
+                loading.close();
+        
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>
